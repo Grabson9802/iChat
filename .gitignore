@@ -1,0 +1,11 @@
+# Ignore build artifacts
+build/
+*.pro.user
+
+# Ignore temporary files
+*~
+
+# Ignore compiled files
+*.o
+*.moc
+*.user
