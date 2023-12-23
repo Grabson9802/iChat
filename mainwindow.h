@@ -20,6 +20,7 @@ public:
 
 private slots:
     void onLoginButtonClicked();
+    void onRegisterButtonClicked();
 
 private:
     Ui::MainWindow *ui;
@@ -27,5 +28,6 @@ private:
     QLineEdit *passwordLineEdit;
     QPushButton *loginButton;
     QLabel *messageLabel;
+    QPushButton *registerButton;
 };
 #endif // MAINWINDOW_H

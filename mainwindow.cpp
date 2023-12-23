@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "registrationwindow.h"
+
+#include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,11 +24,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     messageLabel = new QLabel("", this);
 
+    registerButton = new QPushButton("Register", this);
+
     // Układanie elementów interfejsu użytkownika
     QBoxLayout *layout = new QVBoxLayout();
     layout->addWidget(usernameLineEdit);
     layout->addWidget(passwordLineEdit);
     layout->addWidget(loginButton);
+    layout->addWidget(registerButton);
     layout->addWidget(messageLabel);
 
     QWidget *widget = new QWidget();
@@ -35,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Połączenie sygnału i slotu dla przycisku logowania
     connect(loginButton, &QPushButton::clicked, this, &MainWindow::onLoginButtonClicked);
+    connect(registerButton, &QPushButton::clicked, this, &MainWindow::onRegisterButtonClicked);
 }
 
 MainWindow::~MainWindow()
@@ -54,4 +61,10 @@ void MainWindow::onLoginButtonClicked() {
         // Login error
         messageLabel->setText("Login failed. Please try again.");
     }
+}
+
+void MainWindow::onRegisterButtonClicked() {
+    // Otwórz nowe okno rejestracji
+    RegistrationWindow *registrationWindow = new RegistrationWindow(this);
+    registrationWindow->show();
 }
