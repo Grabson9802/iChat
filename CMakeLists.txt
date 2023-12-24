@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         mainwindow.ui
         registrationwindow.cpp
         registrationwindow.h
+        contactlist.h
+        contactlist.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

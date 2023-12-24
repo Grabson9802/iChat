@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "registrationwindow.h"
+#include "contactlist.h"
 
 #include <QVBoxLayout>
 
@@ -57,6 +58,9 @@ void MainWindow::onLoginButtonClicked() {
     if (username == "username" && password == "password") {
         // Successful login
         messageLabel->setText("Logged in successfully!");
+
+        ContactList *contactList = new ContactList(this);
+        contactList->show();
     } else {
         // Login error
         messageLabel->setText("Login failed. Please try again.");
