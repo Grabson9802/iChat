@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "registrationwindow.h"
 #include "contactlist.h"
+#include "databasemanager.h"
 
 #include <QVBoxLayout>
 
@@ -45,8 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(registerButton, &QPushButton::clicked, this, &MainWindow::onRegisterButtonClicked);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
@@ -55,7 +55,10 @@ void MainWindow::onLoginButtonClicked() {
     QString username = usernameLineEdit->text();
     QString password = passwordLineEdit->text();
 
-    if (username == "username" && password == "password") {
+    DatabaseManager databaseManager;
+    bool userExist = databaseManager.loginUser(username, password);
+
+    if (userExist) {
         // Successful login
         messageLabel->setText("Logged in successfully!");
 

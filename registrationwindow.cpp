@@ -1,27 +1,30 @@
 #include "registrationwindow.h"
+#include "databasemanager.h"
 
 #include <QVBoxLayout>
 
 RegistrationWindow::RegistrationWindow(QWidget *parent)
-    : QMainWindow(parent)
-{
-    setWindowTitle("Chat App - Rejestracja");
+    : QMainWindow(parent) {
+    setWindowTitle("iChat - Registration");
 
     // Tworzenie elementów interfejsu użytkownika
     usernameLineEdit = new QLineEdit(this);
-    usernameLineEdit->setPlaceholderText("Nowa nazwa użytkownika");
+    usernameLineEdit->setPlaceholderText("New username");
 
     passwordLineEdit = new QLineEdit(this);
-    passwordLineEdit->setPlaceholderText("Nowe hasło");
+    passwordLineEdit->setPlaceholderText("New password");
     passwordLineEdit->setEchoMode(QLineEdit::Password);
 
-    registerButton = new QPushButton("Zarejestruj", this);
+    registerButton = new QPushButton("Register", this);
+
+    messageLabel = new QLabel("");
 
     // Układanie elementów interfejsu użytkownika
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addWidget(usernameLineEdit);
     layout->addWidget(passwordLineEdit);
     layout->addWidget(registerButton);
+    layout->addWidget(messageLabel);
 
     QWidget *widget = new QWidget();
     widget->setLayout(layout);
@@ -32,16 +35,18 @@ RegistrationWindow::RegistrationWindow(QWidget *parent)
     connect(registerButton, &QPushButton::clicked, this, &RegistrationWindow::onRegisterButtonClicked);
 }
 
-void RegistrationWindow::onRegisterButtonClicked()
-{
+void RegistrationWindow::onRegisterButtonClicked() {
     // Pobieranie danych rejestracyjnych
     QString username = usernameLineEdit->text();
     QString password = passwordLineEdit->text();
 
-    // Tutaj powinieneś dodać logikę rejestracji, np. zapis do bazy danych
-    // Po zarejestrowaniu użytkownika, emituj sygnał informujący o zakończeniu rejestracji
-    emit registrationComplete(username);
+    DatabaseManager databaseManager;
+    bool userIsCreated = databaseManager.createUser(username, password);
 
-    // Zamknij okno rejestracji
-    close();
+    if (userIsCreated) {
+        // Zamknij okno rejestracji
+        close();
+    } else {
+        messageLabel->setText("Username already exists!");
+    }
 }

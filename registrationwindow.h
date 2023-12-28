@@ -4,15 +4,12 @@
 #include <QMainWindow>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QLabel>
 
-class RegistrationWindow : public QMainWindow
-{
+class RegistrationWindow : public QMainWindow {
     Q_OBJECT
 public:
     explicit RegistrationWindow(QWidget *parent = nullptr);
-
-signals:
-    void registrationComplete(const QString &username);
 
 private slots:
     void onRegisterButtonClicked();
@@ -21,6 +18,7 @@ private:
     QLineEdit *usernameLineEdit;
     QLineEdit *passwordLineEdit;
     QPushButton *registerButton;
+    QLabel *messageLabel;
 };
 
 #endif // REGISTRATIONWINDOW_H

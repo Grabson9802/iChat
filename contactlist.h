@@ -6,8 +6,7 @@
 #include <QListWidget>
 #include <QPushButton>
 
-class ContactList : public QMainWindow
-{
+class ContactList : public QMainWindow {
     Q_OBJECT
 public:
     explicit ContactList(QWidget *parent = nullptr);

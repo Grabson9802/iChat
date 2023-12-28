@@ -28,8 +28,7 @@ ContactList::ContactList(QWidget *parent)
     connect(closeButton, &QPushButton::clicked, this, &ContactList::close);
 }
 
-void ContactList::addContact(const QString &contactUsername)
-{
+void ContactList::addContact(const QString &contactUsername) {
     // Dodaj kontakt do listy
     QListWidgetItem *contactItem = new QListWidgetItem(contactUsername);
     contactListWidget->addItem(contactItem);
