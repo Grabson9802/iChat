@@ -41,6 +41,7 @@ void RegistrationWindow::onRegisterButtonClicked() {
     QString password = passwordLineEdit->text();
 
     DatabaseManager databaseManager;
+
     bool userIsCreated = databaseManager.createUser(username, password);
 
     if (userIsCreated) {

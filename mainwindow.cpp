@@ -3,6 +3,7 @@
 #include "registrationwindow.h"
 #include "contactlist.h"
 #include "databasemanager.h"
+#include "globalstate.h"
 
 #include <QVBoxLayout>
 
@@ -29,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     registerButton = new QPushButton("Register", this);
 
     // Układanie elementów interfejsu użytkownika
-    QBoxLayout *layout = new QVBoxLayout();
+    QVBoxLayout *layout = new QVBoxLayout();
     layout->addWidget(usernameLineEdit);
     layout->addWidget(passwordLineEdit);
     layout->addWidget(loginButton);
@@ -60,6 +61,7 @@ void MainWindow::onLoginButtonClicked() {
 
     if (userExist) {
         // Successful login
+        GlobalState::getInstance().setCurrentUser(username);
         messageLabel->setText("Logged in successfully!");
 
         ContactList *contactList = new ContactList(this);

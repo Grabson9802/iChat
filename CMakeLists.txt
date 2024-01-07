@@ -26,6 +26,10 @@ set(PROJECT_SOURCES
         contactlist.cpp
         databasemanager.cpp
         databasemanager.h
+        addcontactwindow.cpp
+        addcontactwindow.h
+        globalstate.cpp
+        globalstate.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

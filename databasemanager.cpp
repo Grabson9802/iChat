@@ -3,6 +3,114 @@
 DatabaseManager::DatabaseManager() {
     openDatabase();
     createUsersTable(); // Call this function to create the table when the database is opened
+    createContactsTable();  // Create contacts table
+}
+
+QStringList DatabaseManager::loadContacts(const QString &username) {
+    QStringList contacts;
+
+    // Get user ID for the provided username
+    int userId = getUserId(username);
+
+    if (userId == -1) {
+        qDebug() << "Error: User not found!";
+        return contacts;
+    }
+
+    QSqlQuery query;
+
+    // Use a prepared statement to avoid SQL injection
+    query.prepare("SELECT u.username "
+                  "FROM contacts c "
+                  "JOIN users u ON c.contact_id = u.id "
+                  "WHERE c.user_id = :user_id");
+    query.bindValue(":user_id", userId);
+
+    if (query.exec()) {
+        while (query.next()) {
+            // Add each contact username to the list
+            contacts.append(query.value("username").toString());
+        }
+    } else {
+        qDebug() << "Error loading contacts:" << query.lastError().text();
+    }
+
+    return contacts;
+}
+
+void DatabaseManager::createContactsTable() {
+    QSqlQuery query;
+
+    // SQL statement to create the contacts table
+    const QString createTableQuery = "CREATE TABLE IF NOT EXISTS contacts ("
+                                     "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                     "user_id INTEGER, "
+                                     "contact_id INTEGER, "
+                                     "FOREIGN KEY(user_id) REFERENCES users(id), "
+                                     "FOREIGN KEY(contact_id) REFERENCES users(id))";
+
+    if (query.exec(createTableQuery)) {
+        qDebug() << "Contacts table created successfully!";
+    } else {
+        qDebug() << "Error creating contacts table:" << query.lastError().text();
+    }
+}
+
+bool DatabaseManager::addContact(const QString &username, const QString &contactUsername) {
+    // Get user IDs for the provided usernames
+    int userId = getUserId(username);
+    int contactId = getUserId(contactUsername);
+
+    if (userId == -1 || contactId == -1) {
+        qDebug() << "Error: User or contact not found!";
+        return false;
+    }
+
+    // Check if the contact already exists
+    if (contactExists(userId, contactId)) {
+        qDebug() << "Error: Contact already exists!";
+        return false;
+    }
+
+    QSqlQuery query;
+
+    // Use a prepared statement to avoid SQL injection
+    query.prepare("INSERT INTO contacts (user_id, contact_id) VALUES (:user_id, :contact_id)");
+    query.bindValue(":user_id", userId);
+    query.bindValue(":contact_id", contactId);
+
+    if (query.exec()) {
+        qDebug() << "Contact added successfully!";
+        return true;
+    } else {
+        qDebug() << "Error adding contact:" << query.lastError().text();
+        return false;
+    }
+}
+
+int DatabaseManager::getUserId(const QString &username) {
+    QSqlQuery query;
+
+    // Use a prepared statement to avoid SQL injection
+    query.prepare("SELECT id FROM users WHERE username = :username");
+    query.bindValue(":username", username);
+
+    if (query.exec() && query.next()) {
+        return query.value("id").toInt();
+    } else {
+        return -1;  // User not found
+    }
+}
+
+bool DatabaseManager::contactExists(int userId, int contactId) {
+    QSqlQuery query;
+
+    // Use a prepared statement to avoid SQL injection
+    query.prepare("SELECT * FROM contacts WHERE user_id = :user_id AND contact_id = :contact_id");
+    query.bindValue(":user_id", userId);
+    query.bindValue(":contact_id", contactId);
+
+    return query.exec() && query.next();
 }
 
 void DatabaseManager::createUsersTable() {

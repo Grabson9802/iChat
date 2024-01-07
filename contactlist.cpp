@@ -1,4 +1,6 @@
 #include "contactlist.h"
+#include "addcontactwindow.h"
+#include "globalstate.h"
 
 #include <QVBoxLayout>
 
@@ -26,10 +28,18 @@ ContactList::ContactList(QWidget *parent)
 
     // Połączenie sygnału i slotu dla przycisku zamknięcia
     connect(closeButton, &QPushButton::clicked, this, &ContactList::close);
+    connect(addContactButton, &QPushButton::clicked, this, &ContactList::showAddContactWindow);
+    loadContacts();
 }
 
-void ContactList::addContact(const QString &contactUsername) {
-    // Dodaj kontakt do listy
-    QListWidgetItem *contactItem = new QListWidgetItem(contactUsername);
-    contactListWidget->addItem(contactItem);
+void ContactList::loadContacts() {
+    QString username = GlobalState::getInstance().getCurrentUser();
+    QStringList contacts = databaseManager.loadContacts(username);
+    contactListWidget->clear();
+    contactListWidget->addItems(contacts);
+}
+
+void ContactList::showAddContactWindow() {
+    AddContactWindow *addContactWindow = new AddContactWindow();
+    addContactWindow->show();
 }

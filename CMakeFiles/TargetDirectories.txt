@@ -1,0 +1,4 @@
+/home/kgrabowy/qt_projects/iChat/CMakeFiles/iChat.dir
+/home/kgrabowy/qt_projects/iChat/CMakeFiles/edit_cache.dir
+/home/kgrabowy/qt_projects/iChat/CMakeFiles/rebuild_cache.dir
+/home/kgrabowy/qt_projects/iChat/CMakeFiles/iChat_autogen.dir
