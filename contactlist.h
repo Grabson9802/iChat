@@ -23,6 +23,7 @@ private:
     void loadContacts();
     void showAddContactWindow();
     void onContactDoubleClicked(QListWidgetItem *item);
+    void addContact(const QString &contactUsername);
 };
 
 #endif // CONTACTLIST_H

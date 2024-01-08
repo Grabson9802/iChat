@@ -9,12 +9,12 @@ class AddContactWindow : public QMainWindow {
     Q_OBJECT
 public:
     explicit AddContactWindow(QWidget *parent = nullptr);
-    void addContact();
 signals:
     void refresh_user_list();
 private:
     QLineEdit *usernameLineEdit;
     QPushButton *sendInvitationButton;
+    void addContact();
 };
 
 #endif // ADDCONTACTWINDOW_H
