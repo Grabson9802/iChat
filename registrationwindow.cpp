@@ -43,7 +43,6 @@ void RegistrationWindow::onRegisterButtonClicked() {
     DatabaseManager databaseManager;
 
     bool userIsCreated = databaseManager.createUser(username, password);
-
     if (userIsCreated) {
         // Zamknij okno rejestracji
         close();

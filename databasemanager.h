@@ -20,9 +20,12 @@ private:
     void closeDatabase();
     void createUsersTable();
     bool usernameExists(const QString &username);
+<<<<<<< HEAD
     void createContactsTable();
     int getUserId(const QString &username);
     bool contactExists(int userId, int contactId);
+=======
+>>>>>>> master
 };
 
 #endif // DATABASEMANAGER_H

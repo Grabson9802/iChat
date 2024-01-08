@@ -78,3 +78,8 @@ void ContactList::showAddContactWindow() {
 void ContactList::contact_added() {
     loadContacts();
 }
+void ContactList::addContact(const QString &contactUsername) {
+    // Dodaj kontakt do listy
+    QListWidgetItem *contactItem = new QListWidgetItem(contactUsername);
+    contactListWidget->addItem(contactItem);
+}
