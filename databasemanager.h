@@ -10,6 +10,7 @@ public:
     bool createUser(const QString &username, const QString &password);
     bool loginUser(const QString &username, const QString &password);
     bool addContact(const QString &username, const QString &contactUsername);
+    bool removeContact(const QString &username, const QString &contactUsername);
     QStringList loadContacts(const QString &username);
 
 private:

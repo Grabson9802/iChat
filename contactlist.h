@@ -2,6 +2,7 @@
 #define CONTACTLIST_H
 
 #include "databasemanager.h"
+#include "addcontactwindow.h"
 
 #include <QMainWindow>
 #include <QString>
@@ -12,6 +13,8 @@ class ContactList : public QMainWindow {
     Q_OBJECT
 public:
     explicit ContactList(QWidget *parent = nullptr);
+public slots:
+    void contact_added();
 private:
     QListWidget *contactListWidget;
     QPushButton *addContactButton;
@@ -19,6 +22,7 @@ private:
     DatabaseManager databaseManager;
     void loadContacts();
     void showAddContactWindow();
+    void onContactDoubleClicked(QListWidgetItem *item);
 };
 
 #endif // CONTACTLIST_H

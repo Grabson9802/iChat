@@ -32,6 +32,7 @@ void AddContactWindow::addContact() {
     bool successfullyAdded = databaseManager.addContact(userLogged, usernameToAdd);
 
     if(successfullyAdded) {
+        refresh_user_list();
         close();
     }
 }

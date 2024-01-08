@@ -6,6 +6,32 @@ DatabaseManager::DatabaseManager() {
     createContactsTable();  // Create contacts table
 }
 
+bool DatabaseManager::removeContact(const QString &username, const QString &contactUsername) {
+    // Get user IDs for the provided usernames
+    int userId = getUserId(username);
+    int contactId = getUserId(contactUsername);
+
+    if (userId == -1 || contactId == -1) {
+        qDebug() << "Error: User or contact not found!";
+        return false;
+    }
+
+    QSqlQuery query;
+
+    // Use a prepared statement to avoid SQL injection
+    query.prepare("DELETE FROM contacts WHERE user_id = :user_id AND contact_id = :contact_id");
+    query.bindValue(":user_id", userId);
+    query.bindValue(":contact_id", contactId);
+
+    if (query.exec()) {
+        qDebug() << "Contact removed successfully!";
+        return true;
+    } else {
+        qDebug() << "Error removing contact:" << query.lastError().text();
+        return false;
+    }
+}
+
 QStringList DatabaseManager::loadContacts(const QString &username) {
     QStringList contacts;
 
